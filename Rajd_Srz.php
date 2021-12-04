@@ -35,13 +35,18 @@ if (!defined('WPINC')) {
 
 const RAJD_SRZ_VERSION = '1.0.0';
 const RAJD_SRZ_MARKERS_TABLE = 'rajd_srz_markers';
+const RAJD_SRZ_STATIONS_TABLE = 'rajd_srz_stations';
+const RAJD_SRZ_STOPS_TABLE = 'rajd_srz_stops';
+
+const RAJD_SRZ_PLUGIN_DIR = WP_PLUGIN_DIR . '/rajd-srzednickiego';
+define('RAJD_SRZ_ASSETS_DIR', plugins_url('/assets/', __FILE__));
 
 /**
  * The code that runs during plugin activation.
  */
 function activate_rajd_srz()
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/rajd_srz_Activator.php';
+    require_once plugin_dir_path(__FILE__) . 'includes/Rajd_Srz_Activator.php';
     Rajd_Srz_Activator::activate();
 }
 
@@ -50,12 +55,12 @@ function activate_rajd_srz()
  */
 function deactivate_rajd_srz()
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/rajd_srz_Deactivator.php';
+    require_once plugin_dir_path(__FILE__) . 'includes/Rajd_Srz_Deactivator.php';
     Rajd_Srz_Deactivator::deactivate();
 }
 
-//register_activation_hook(__FILE__, 'activate_rajd_srz');
-//register_deactivation_hook(__FILE__, 'deactivate_rajd_srz');
+register_activation_hook(__FILE__, 'activate_rajd_srz');
+register_deactivation_hook(__FILE__, 'deactivate_rajd_srz');
 
 /**
  * The core plugin class that is used to define internationalization,

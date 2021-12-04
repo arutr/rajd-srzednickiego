@@ -18,7 +18,7 @@
  *
  * @package    Rajd_Srz
  * @subpackage Rajd_Srz/public
- * @author     Your Name <email@example.com>
+ * @author     Artur Komoter <artur@komoter.pl>
  */
 class Rajd_Srz_Public
 {
@@ -63,14 +63,46 @@ class Rajd_Srz_Public
     }
 
     /**
-     * @param array $attributes
+     * @param array|string $attributes
      * @param null $content
+     * @param string $tag
      *
-     * @return mixed|null
+     * @return string
      */
-    public function rajd_srz_shortcode($attributes = [], $content = null)
+    public function rajd_srz_shortcode($attributes = [], $content = null, string $tag = ''): string
     {
-        return 'lol';
+        if (is_user_logged_in()) {
+            $this->get_dashboard_content();
+            return '';
+        }
+
+        $attributes = array_change_key_case((array)$attributes, CASE_LOWER);
+        $attributes = shortcode_atts([
+            'registration_form_id' => '0',
+        ], $attributes, $tag);
+
+        $html = '<p>Załóż konto, aby móc uczestniczyć w Rajdzie Srzednickiego.</p>';
+
+        if (!empty($attributes['registration_form_id'])) {
+            $html .= do_shortcode('[user_registration_form id="' . $attributes['registration_form_id'] . '"]');
+        }
+
+        $html .= '<br/>';
+        $html .= '<p>Jeśli posiadasz już konto, zaloguj się.</p>';
+        $html .= wp_login_form([
+            'echo' => false,
+            'form_id' => 'rajd_srz_login'
+        ]);
+
+        return $html;
+    }
+
+    /**
+     * Get dashboard content.
+     */
+    public function get_dashboard_content()
+    {
+        include_once dirname(__FILE__) . '/dashboard.php';
     }
 
     /**
@@ -80,7 +112,8 @@ class Rajd_Srz_Public
      */
     public function enqueue_styles()
     {
-//        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/plugin-name-public.css', [], $this->version, 'all');
+        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/rajd-srzednickiego.css', [], $this->version, 'all');
+        wp_enqueue_style('leaflet_css', RAJD_SRZ_ASSETS_DIR . 'css/leaflet.css', [], $this->version);
     }
 
     /**
@@ -90,7 +123,6 @@ class Rajd_Srz_Public
      */
     public function enqueue_scripts()
     {
-//        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/plugin-name-public.js', ['jquery'], $this->version, false);
+        wp_enqueue_script('leaflet_js', RAJD_SRZ_ASSETS_DIR . 'js/leaflet.js', ['jquery'], $this->version);
     }
-
 }

@@ -1,0 +1,37 @@
+.ur-frontend-form {
+    border: none;
+    padding: 0;
+    width: 100%;
+}
+
+.ur-frontend-form .ur-button-container,
+.ur-frontend-form .ur-form-row .ur-form-grid {
+    padding: 0;
+}
+
+.ur-frontend-form .ur-button-container .ur-submit-button {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.ur-frontend-form .ur-form-row .ur-form-grid select {
+    background-color: white;
+}
+
+.rajd-srz-description {
+    white-space: pre-wrap;
+}
+
+.rajd-srz-station h3,
+.rajd-srz-stop h4 {
+    margin-top: 0 !important;
+}
+
+.rajd-srz-station h6,
+.rajd-srz-stop h6 {
+    margin-bottom: 1rem !important;
+}
+
+.rajd-srz-stop-submitted {
+    opacity: 0.25;
+}

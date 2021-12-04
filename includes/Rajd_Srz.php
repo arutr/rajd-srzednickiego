@@ -67,11 +67,7 @@ class Rajd_Srz
      */
     public function __construct()
     {
-        if (defined('PLUGIN_NAME_VERSION')) {
-            $this->version = PLUGIN_NAME_VERSION;
-        } else {
-            $this->version = '1.0.0';
-        }
+        $this->version = RAJD_SRZ_VERSION;
         $this->plugin_name = 'rajd-srz';
 
         $this->load_dependencies();
@@ -113,7 +109,7 @@ class Rajd_Srz
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-//        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/Rajd_Srz_Admin.php';
+        require_once plugin_dir_path(dirname(__FILE__)) . 'admin/Rajd_Srz_Admin.php';
 
         /**
          * The class responsible for defining all actions that occur in the public-facing
@@ -148,15 +144,12 @@ class Rajd_Srz
      */
     private function define_admin_hooks()
     {
-//        $plugin_admin = new Rajd_Srz_Admin($this->get_plugin_name(), $this->get_version());
-//        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-//        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-//        $this->loader->add_action('admin_init', $plugin_admin, 'init_team_settings');
-//        $this->loader->add_action('admin_menu', $plugin_admin, 'get_menu');
-//        $this->loader->add_action('edit_user_profile', $plugin_admin, 'usermeta_form_field_institution');
-//        $this->loader->add_action('edit_user_profile_update', $plugin_admin, 'usermeta_form_field_institution_update');
-//        $this->loader->add_action('personal_options_update', $plugin_admin, 'usermeta_form_field_institution_update');
-//        $this->loader->add_action('show_user_profile', $plugin_admin, 'usermeta_form_field_institution');
+        $plugin_admin = new Rajd_Srz_Admin($this->get_plugin_name(), $this->get_version());
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        $this->loader->add_action('admin_menu', $plugin_admin, 'get_menu');
+        $this->loader->add_action('admin_menu', $plugin_admin, 'insert_menu_separator');
+        $this->loader->add_action('admin_post_create_marker', $plugin_admin, 'create_marker');
     }
 
     /**
